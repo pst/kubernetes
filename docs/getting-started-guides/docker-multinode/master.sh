@@ -66,7 +66,7 @@ detect_lsb() {
         *64)
             ;;
          *)
-            echo "Error: We currently only support 64-bit platforms."       
+            echo "Error: We currently only support 64-bit platforms."
             exit 1
             ;;
     esac
@@ -103,7 +103,7 @@ detect_lsb() {
 # Start the bootstrap daemon
 # TODO: do not start docker-bootstrap if it's already running
 bootstrap_daemon() {
-    docker -d \
+    docker daemon \
         -H unix:///var/run/docker-bootstrap.sock \
         -p /var/run/docker-bootstrap.pid \
         --iptables=false \
@@ -112,7 +112,7 @@ bootstrap_daemon() {
         --graph=/var/lib/docker-bootstrap \
             2> /var/log/docker-bootstrap.log \
             1> /dev/null &
-    
+
     sleep 5
 }
 
@@ -120,7 +120,7 @@ bootstrap_daemon() {
 DOCKER_CONF=""
 
 start_k8s(){
-    # Start etcd 
+    # Start etcd
     docker -H unix:///var/run/docker-bootstrap.sock run \
         --restart=on-failure \
         --net=host \

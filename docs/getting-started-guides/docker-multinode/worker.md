@@ -70,7 +70,7 @@ As previously, we need a second instance of the Docker daemon running to bootstr
 Run:
 
 ```sh
-sudo sh -c 'docker -d -H unix:///var/run/docker-bootstrap.sock -p /var/run/docker-bootstrap.pid --iptables=false --ip-masq=false --bridge=none --graph=/var/lib/docker-bootstrap 2> /var/log/docker-bootstrap.log 1> /dev/null &'
+sudo sh -c 'docker daemon -H unix:///var/run/docker-bootstrap.sock -p /var/run/docker-bootstrap.pid --iptables=false --ip-masq=false --bridge=none --graph=/var/lib/docker-bootstrap 2> /var/log/docker-bootstrap.log 1> /dev/null &'
 ```
 
 _Important Note_:
@@ -173,7 +173,7 @@ sudo docker run \
     --volume=/var/run:/var/run:rw \
     --net=host \
     --privileged=true \
-    --pid=host \ 
+    --pid=host \
     -d \
     gcr.io/google_containers/hyperkube-amd64:v${K8S_VERSION} \
     /hyperkube kubelet \
